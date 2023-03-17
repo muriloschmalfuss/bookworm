@@ -1,32 +1,35 @@
-package com.schmalfuss.bookworm.controllers;
+package com.schmalfuss.bookworm.repository;
 
 import com.schmalfuss.bookworm.model.Category;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping("/categories")
-public class CategoryController {
-
+@Repository
+public class CategoryRepository {
     private List<Category> categoryList = new ArrayList<>();
     private Integer counter = 1;
 
-    @GetMapping
-    public List<Category> list() {
-        return categoryList;
+    public List<Category> getAll() {
+        return  categoryList;
     }
 
-    @PostMapping
-    public Category create(@RequestBody Category category) {
+    public Category getById(Integer id) {
+        return categoryList
+                .stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Category create(Category category) {
         category.setId(counter++);
         categoryList.add(category);
         return category;
     }
 
-    @PutMapping("/{id}")
-    public Category edit(@RequestBody Category category, @PathVariable("id") Integer id) {
+    public Category edit(Category category, Integer id) {
         category.setId(id);
 
         int index = categoryList.indexOf(categoryList
@@ -41,16 +44,11 @@ public class CategoryController {
         return category;
     }
 
-    @DeleteMapping("/{id}")
-    public String remove(@PathVariable("id") Integer id) {
+    public void destroy(Integer id) {
         categoryList.remove(categoryList
                 .stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()
                 .orElse(null));
-
-        return "Categoria removida com sucesso";
     }
-
-
 }
