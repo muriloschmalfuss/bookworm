@@ -1,9 +1,12 @@
 package com.schmalfuss.bookworm.model.entity;
 
-import com.schmalfuss.bookworm.model.dto.CategoryDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,16 +16,17 @@ public class CategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
+//    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+//    private List<BookEntity> books;
+
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     @Column(name = "description")
     private String description;
 
-    public CategoryEntity update(CategoryDTO categoryDTO) {
-        this.name = categoryDTO.getName();
-        this.description = categoryDTO.getDescription();
-        return this;
-    }
-
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 }

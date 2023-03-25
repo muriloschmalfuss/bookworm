@@ -1,8 +1,8 @@
 package com.schmalfuss.bookworm.controller;
 
-import com.schmalfuss.bookworm.model.dto.CategoryDTO;
+import com.schmalfuss.bookworm.model.dto.PublisherDTO;
 import com.schmalfuss.bookworm.model.dto.MessageDTO;
-import com.schmalfuss.bookworm.service.CategoryService;
+import com.schmalfuss.bookworm.service.PublisherService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.action.internal.EntityActionVetoException;
@@ -12,16 +12,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/publishers")
 @Slf4j
-public class CategoryController {
+public class PublisherController {
     @Autowired
-    private CategoryService categoryService;
+    private PublisherService publisherService;
 
     @GetMapping
     public ResponseEntity<Object> list() {
         try {
-            return ResponseEntity.ok(categoryService.getAll());
+            return ResponseEntity.ok(publisherService.getAll());
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity
@@ -33,7 +33,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> show(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(categoryService.getById(id));
+            return ResponseEntity.ok(publisherService.getById(id));
         } catch (EntityActionVetoException e) {
             log.error(e.getMessage());
             return ResponseEntity
@@ -48,9 +48,9 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> create(@RequestBody @Valid CategoryDTO categoryDTO) {
+    public ResponseEntity<Object> create(@RequestBody @Valid PublisherDTO publisherDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(categoryDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(publisherService.create(publisherDTO));
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity
@@ -60,9 +60,9 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> edit(@RequestBody @Valid CategoryDTO categoryDTO, @PathVariable("id") Long id) {
+    public ResponseEntity<Object> edit(@RequestBody @Valid PublisherDTO publisherDTO, @PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(categoryService.edit(categoryDTO, id));
+            return ResponseEntity.ok(publisherService.edit(publisherDTO, id));
         } catch (EntityActionVetoException e) {
             log.error(e.getMessage());
             return ResponseEntity
@@ -79,8 +79,8 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> remove(@PathVariable("id") Long id) {
         try {
-            categoryService.destroy(id);
-            return ResponseEntity.ok(new MessageDTO("Categoria removida com sucesso"));
+            publisherService.destroy(id);
+            return ResponseEntity.ok(new MessageDTO("Editora removida com sucesso"));
         } catch (Exception e) {
             log.error(e.getMessage());
             return ResponseEntity
