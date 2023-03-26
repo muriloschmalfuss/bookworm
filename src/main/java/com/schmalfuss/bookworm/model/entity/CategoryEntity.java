@@ -18,9 +18,6 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-//    private List<BookEntity> books;
-
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     @Column(name = "description")

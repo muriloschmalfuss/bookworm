@@ -35,17 +35,6 @@ public class CategoryService {
         throw new EntityNotFoundException("Categoria não encontrada");
     }
 
-    public CategoryDTO getByName(String name) {
-        Optional<CategoryEntity> categoryEntityOp = Optional.ofNullable(categoryRepository.findByName(name));
-
-        if (categoryEntityOp.isPresent()) {
-            CategoryEntity categoryEntity = categoryEntityOp.get();
-            return categoryMapper.update(categoryEntity);
-        }
-
-        throw new EntityNotFoundException("Categoria não encontrada");
-    }
-
     public CategoryDTO create(CategoryDTO categoryDTO) {
         CategoryEntity category = categoryMapper.update(categoryDTO);
 

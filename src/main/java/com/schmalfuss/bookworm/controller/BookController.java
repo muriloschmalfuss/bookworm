@@ -89,11 +89,33 @@ public class BookController {
         }
     }
 
-    public ResponseEntity<Object> findBooksByCategory() {
-        return null;
+    @GetMapping("/category/{category_id}")
+    public ResponseEntity<Object> findBooksByCategory(@PathVariable Long category_id) {
+        try {
+            return ResponseEntity.ok(bookService.listByCategory(category_id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO(e.getMessage()));
+        }
     }
 
-    public ResponseEntity<Object> findBooksByPublisher() {
-        return null;
+    @GetMapping("/publisher/{publisher_id}")
+    public ResponseEntity<Object> findBooksByPublisher(@PathVariable Long publisher_id) {
+        try {
+            return ResponseEntity.ok(bookService.listByPublisher(publisher_id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<Object> filter(
+            @RequestParam(name = "name", defaultValue = "") String name,
+            @RequestParam(name = "isbn", defaultValue = "") String isbn
+    ) {
+        try {
+            return ResponseEntity.ok(bookService.filter(name, isbn));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageDTO(e.getMessage()));
+        }
     }
 }

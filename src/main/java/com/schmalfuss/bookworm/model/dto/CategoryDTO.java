@@ -1,9 +1,12 @@
 package com.schmalfuss.bookworm.model.dto;
 
+import com.schmalfuss.bookworm.model.entity.BookEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter

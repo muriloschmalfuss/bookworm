@@ -2,6 +2,8 @@ package com.schmalfuss.bookworm.service;
 
 import com.schmalfuss.bookworm.model.dto.BookDTO;
 import com.schmalfuss.bookworm.model.entity.BookEntity;
+import com.schmalfuss.bookworm.model.entity.CategoryEntity;
+import com.schmalfuss.bookworm.model.entity.PublisherEntity;
 import com.schmalfuss.bookworm.model.mapper.BookMapper;
 import com.schmalfuss.bookworm.repository.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -63,5 +65,24 @@ public class BookService {
         }
 
         throw new EntityNotFoundException("Livro não encontrado");
+    }
+
+    public List<BookDTO> listByCategory(Long category_id) {
+        CategoryEntity categoryEntity = new CategoryEntity();
+        categoryEntity.setId(category_id);
+        List<BookEntity> bookEntityList = bookRepository.findByCategory(categoryEntity);
+        return bookEntityList.stream().map(bookEntity -> bookMapper.update(bookEntity)).toList();
+    }
+
+    public List<BookDTO> listByPublisher(Long publisher_id) {
+        PublisherEntity publisherEntity = new PublisherEntity();
+        publisherEntity.setId(publisher_id);
+        List<BookEntity> bookEntityList = bookRepository.findByPublisher(publisherEntity);
+        return bookEntityList.stream().map(bookEntity -> bookMapper.update(bookEntity)).toList();
+    }
+
+    public List<BookDTO> filter(String name, String isbn) {
+        List<BookEntity> bookEntityList = bookRepository.filter(name, isbn);
+        return bookEntityList.stream().map(bookEntity -> bookMapper.update(bookEntity)).toList();
     }
 }

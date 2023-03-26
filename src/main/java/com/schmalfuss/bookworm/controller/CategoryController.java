@@ -88,21 +88,4 @@ public class CategoryController {
                     .body(new MessageDTO(e.getMessage()));
         }
     }
-
-    @GetMapping("/books")
-    public ResponseEntity<Object> books(@RequestParam(name="name",defaultValue = "") String name) {
-        try {
-            return ResponseEntity.ok(categoryService.getByName(name));
-        } catch (EntityActionVetoException e) {
-            log.error(e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .body(new MessageDTO(e.getMessage()));
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageDTO(e.getMessage()));
-        }
-    }
 }

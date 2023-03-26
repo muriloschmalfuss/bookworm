@@ -16,9 +16,6 @@ public class PublisherEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)
-//    private List<BookEntity> books;
-
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
