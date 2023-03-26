@@ -27,7 +27,18 @@ public class CategoryService {
 
     public CategoryDTO getById(Long id) {
         Optional<CategoryEntity> categoryEntityOp = categoryRepository.findById(id);
-        if (categoryEntityOp.isEmpty()) {
+        if (categoryEntityOp.isPresent()) {
+            CategoryEntity categoryEntity = categoryEntityOp.get();
+            return categoryMapper.update(categoryEntity);
+        }
+
+        throw new EntityNotFoundException("Categoria não encontrada");
+    }
+
+    public CategoryDTO getByName(String name) {
+        Optional<CategoryEntity> categoryEntityOp = Optional.ofNullable(categoryRepository.findByName(name));
+
+        if (categoryEntityOp.isPresent()) {
             CategoryEntity categoryEntity = categoryEntityOp.get();
             return categoryMapper.update(categoryEntity);
         }

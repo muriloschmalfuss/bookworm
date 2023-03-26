@@ -27,7 +27,7 @@ public class PublisherService {
 
     public PublisherDTO getById(Long id) {
         Optional<PublisherEntity> publisherEntityOp = publisherRepository.findById(id);
-        if (publisherEntityOp.isEmpty()) {
+        if (publisherEntityOp.isPresent()) {
             PublisherEntity publisherEntity = publisherEntityOp.get();
             return publisherMapper.update(publisherEntity);
         }

@@ -27,7 +27,7 @@ public class BookService {
 
     public BookDTO getById(Long id) {
         Optional<BookEntity> bookEntityOp = bookRepository.findById(id);
-        if (bookEntityOp.isEmpty()) {
+        if (bookEntityOp.isPresent()) {
             BookEntity bookEntity = bookEntityOp.get();
             return bookMapper.update(bookEntity);
         }
