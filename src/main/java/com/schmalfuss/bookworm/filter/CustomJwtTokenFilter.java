@@ -37,8 +37,10 @@ public class CustomJwtTokenFilter extends OncePerRequestFilter {
                 String username = jwtService.getUsername(token);
                 UserEntity user = (UserEntity) loginUserService.loadUserByUsername(username);
 
-                UsernamePasswordAuthenticationToken authenticationToken = UsernamePasswordAuthenticationToken.authenticated(user.getUsername(), user.getPassword(), null);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                UsernamePasswordAuthenticationToken authenticationToken = UsernamePasswordAuthenticationToken.authenticated(user.getUsername(), null, user.getAuthorities());
+                if(SecurityContextHolder.getContext().getAuthentication() == null) {
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
             }
         }
         filterChain.doFilter(request, response);

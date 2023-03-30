@@ -9,6 +9,7 @@ import org.hibernate.action.internal.EntityActionVetoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,6 +49,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @Secured("admin")
     public ResponseEntity<Object> create(@RequestBody @Valid CategoryDTO categoryDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.create(categoryDTO));
@@ -60,6 +62,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @Secured("admin")
     public ResponseEntity<Object> edit(@RequestBody @Valid CategoryDTO categoryDTO, @PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(categoryService.edit(categoryDTO, id));
@@ -77,6 +80,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("admin")
     public ResponseEntity<Object> remove(@PathVariable("id") Long id) {
         try {
             categoryService.destroy(id);

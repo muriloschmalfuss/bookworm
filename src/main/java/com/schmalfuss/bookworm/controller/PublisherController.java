@@ -9,6 +9,7 @@ import org.hibernate.action.internal.EntityActionVetoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -48,6 +49,7 @@ public class PublisherController {
     }
 
     @PostMapping
+    @Secured("admin")
     public ResponseEntity<Object> create(@RequestBody @Valid PublisherDTO publisherDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(publisherService.create(publisherDTO));
@@ -60,6 +62,7 @@ public class PublisherController {
     }
 
     @PutMapping("/{id}")
+    @Secured("admin")
     public ResponseEntity<Object> edit(@RequestBody @Valid PublisherDTO publisherDTO, @PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(publisherService.edit(publisherDTO, id));
@@ -77,6 +80,7 @@ public class PublisherController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("admin")
     public ResponseEntity<Object> remove(@PathVariable("id") Long id) {
         try {
             publisherService.destroy(id);

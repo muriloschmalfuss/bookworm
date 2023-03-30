@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,8 +26,15 @@ public class UserEntity implements UserDetails {
     @Column(unique = true)
     private String username;
 
+    @JoinColumn
+    @ManyToOne
+    private ProfileEntity profile;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(profile != null) {
+            return List.of(profile);
+        }
         return null;
     }
 
